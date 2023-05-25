@@ -9,7 +9,8 @@
     "start:dev": "node --watch dist",
     "build": "tsc",
     "build:dev": "tsc -w",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test:coverage": "npm run test:coverage"
   },
   "keywords": [],
   "author": "",
