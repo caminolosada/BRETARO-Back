@@ -29,7 +29,9 @@ const loginUser = async (
       username: user.username,
     };
 
-    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET!);
+    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET!, {
+      expiresIn: "4d",
+    });
 
     res.status(statusCodes.ok).json({ token });
   } catch (error) {
