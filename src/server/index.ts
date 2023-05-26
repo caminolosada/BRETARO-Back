@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import { generalError, notFoundError } from "./middleware/errorMiddleware.js";
 import { pingController } from "./controllers/ping/pingController.js";
+import paths from "./utils/paths/paths.js";
 
 const allowedOrigins = process.env.ALLOWED_ORIGIN_DEV!;
 
@@ -21,7 +22,7 @@ app.use(morgan("dev"));
 
 app.use(express.json());
 
-app.get("/", pingController);
+app.get(paths.root, pingController);
 
 app.use(notFoundError);
 app.use(generalError);

@@ -1,5 +1,7 @@
 import { type Request, type Response } from "express";
 import { pingController } from "./pingController";
+import statusCodes from "../../utils/statusCodes/statusCodes.js";
+import messages from "../../utils/messages/messages";
 
 describe("Given a pingController controller", () => {
   describe("When it receives a response", () => {
@@ -10,7 +12,7 @@ describe("Given a pingController controller", () => {
     };
 
     test("Then it should call the response's method status with code 200", () => {
-      const expectedStatusCode = 200;
+      const expectedStatusCode = statusCodes.ok;
 
       pingController(req as Request, res as Response);
 
@@ -18,7 +20,7 @@ describe("Given a pingController controller", () => {
     });
 
     test("Then it should call the response's method json with the message '🏓 Pong'", () => {
-      const expectedMessage = "🏓 Pong";
+      const expectedMessage = messages.pong;
 
       pingController(req as Request, res as Response);
 
