@@ -1,20 +1,19 @@
 import { type NextFunction, type Response } from "express";
 import bcrypt from "bcryptjs";
 import { type UserCredentialsRequest } from "../../../types/types";
-import User from "../../../database/models/User";
-import CustomError from "../../CustomError/CustomError";
+import User from "../../../database/models/User.js";
+import CustomError from "../../CustomError/CustomError.js";
 import jwt, { type JwtPayload } from "jsonwebtoken";
-import messages from "../../utils/messages/messages";
-import statusCodes from "../../utils/statusCodes/statusCodes";
+import messages from "../../utils/messages/messages.js";
+import statusCodes from "../../utils/statusCodes/statusCodes.js";
 
 const loginUser = async (
   req: UserCredentialsRequest,
   res: Response,
   next: NextFunction
 ) => {
+  const { username, password } = req.body;
   try {
-    const { username, password } = req.body;
-
     const user = await User.findOne({ username }).exec();
 
     if (!user || !(await bcrypt.compare(password, user.password))) {

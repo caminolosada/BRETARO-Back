@@ -1,5 +1,5 @@
 import request from "supertest";
-import { type CustomResponse } from "./testUtils.js";
+import { type CustomResponse } from "./utils/testUtils.js";
 import { app } from "./index.js";
 import statusCodes from "./utils/statusCodes/statusCodes.js";
 import messages from "./utils/messages/messages.js";
