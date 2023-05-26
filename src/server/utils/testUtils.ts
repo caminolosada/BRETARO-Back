@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { type UserData } from "../types/types.js";
+import { type UserData } from "../../types/types.js";
 
 export interface CustomResponse {
   status: number;
