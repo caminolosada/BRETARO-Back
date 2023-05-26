@@ -5,6 +5,10 @@ const bookSchema = new Schema({
     type: String,
     required: true,
   },
+  author: {
+    type: String,
+    required: true,
+  },
   frontPage: {
     type: String,
     required: true,
