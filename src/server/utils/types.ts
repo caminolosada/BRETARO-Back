@@ -1,5 +1,6 @@
 export interface PathsStructure {
   root: string;
+  user: string;
   login: string;
 }
 
