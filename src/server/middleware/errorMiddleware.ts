@@ -31,7 +31,7 @@ export const generalError = (
     const validationError = error.details.body
       .map((joiError) => joiError.message)
       .join(" & ")
-      .replaceAll("'", "");
+      .replaceAll('"', "");
 
     (error as CustomError).publicMessage = validationError;
     debug(chalk.blueBright(validationError));

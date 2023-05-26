@@ -2,7 +2,8 @@ import { type PathsStructure } from "../types";
 
 const paths: PathsStructure = {
   root: "/",
-  login: "/users/login",
+  user: "/user",
+  login: "/login",
 };
 
 export default paths;
