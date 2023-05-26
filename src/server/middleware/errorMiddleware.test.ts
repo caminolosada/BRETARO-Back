@@ -1,6 +1,8 @@
 import { type NextFunction, type Request, type Response } from "express";
 import { generalError, notFoundError } from "./errorMiddleware";
 import CustomError from "../CustomError/CustomError";
+import messages from "../utils/messages/messages.js";
+import statusCodes from "../utils/statusCodes/statusCodes.js";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -13,7 +15,10 @@ describe("Given a notFoundError middleware", () => {
       const res = {};
       const next = jest.fn();
 
-      const expectedError = new CustomError("Endpoint not found", 404);
+      const expectedError = new CustomError(
+        messages.notFound,
+        statusCodes.notFound
+      );
 
       notFoundError(req as Request, res as Response, next as NextFunction);
 
@@ -31,7 +36,7 @@ describe("Given a generalError middleware", () => {
   const next = jest.fn();
 
   describe("When it receives an error with status code 404 and the error message 'Endpoint not found'", () => {
-    const error = new CustomError("Endpoint not found", 404);
+    const error = new CustomError(messages.notFound, statusCodes.notFound);
 
     beforeEach(() => {
       generalError(
@@ -49,7 +54,7 @@ describe("Given a generalError middleware", () => {
     });
 
     test("Then it should call the status method with status code 404", () => {
-      const expectedStatus = 404;
+      const expectedStatus = statusCodes.notFound;
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
     });
@@ -67,13 +72,13 @@ describe("Given a generalError middleware", () => {
       );
     });
     test("Then it should call the response method with the message 'Internal server error'", () => {
-      const expectedMessage = "Internal server error";
+      const expectedMessage = messages.internalServerError;
 
       expect(res.json).toHaveBeenCalledWith({ message: expectedMessage });
     });
 
     test("Then it should call the status method with status code 500", () => {
-      const expectedStatus = 500;
+      const expectedStatus = statusCodes.internalServerError;
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
     });

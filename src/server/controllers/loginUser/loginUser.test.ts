@@ -6,6 +6,8 @@ import { mockedToken, mockedUser } from "../../testUtils";
 import User from "../../../database/models/User";
 import loginUser from "./loginUser";
 import CustomError from "../../CustomError/CustomError";
+import statusCodes from "../../utils/statusCodes/statusCodes";
+import messages from "../../utils/messages/messages";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -40,7 +42,7 @@ describe("Given a loginUser controller", () => {
     jwt.sign = jest.fn().mockReturnValue(token);
 
     test("Then it should call the status method with a status code 200", async () => {
-      const expectedStatusCode = 200;
+      const expectedStatusCode = statusCodes.ok;
 
       await loginUser(req as UserCredentialsRequest, res as Response, next);
 
@@ -56,7 +58,10 @@ describe("Given a loginUser controller", () => {
 
   describe("When it receives a request with invalid credentials and next function", () => {
     test("Then it should call the next function with the error message 'Wrong credentials' and status code 401", async () => {
-      const expectedError = new CustomError("Wrong credentials", 401);
+      const expectedError = new CustomError(
+        messages.wrongCredentials,
+        statusCodes.unauthorized
+      );
 
       bcrypt.compare = jest.fn().mockResolvedValue(false);
 
