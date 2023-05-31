@@ -12,7 +12,7 @@ const port = process.env.PORT ?? 4000;
 const mongoDbConnection = process.env.MONGODB_CONNECTION;
 
 if (!mongoDbConnection) {
-  debug(chalk.red("Missing environmen variables"));
+  debug(chalk.red("Missing environment variables"));
   process.exit(1);
 }
 

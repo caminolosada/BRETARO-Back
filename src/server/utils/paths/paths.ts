@@ -4,6 +4,7 @@ const paths: PathsStructure = {
   root: "/",
   user: "/user",
   login: "/login",
+  books: "/books",
 };
 
 export default paths;
