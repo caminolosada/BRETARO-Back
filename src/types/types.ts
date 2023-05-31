@@ -1,4 +1,5 @@
 import { type Request } from "express";
+import { type Types } from "mongoose";
 
 export interface UserCredentials {
   username: string;
@@ -14,3 +15,19 @@ export type UserCredentialsRequest = Request<
   Record<string, unknown>,
   UserCredentials
 >;
+
+export interface BookStructure {
+  title: string;
+  author: string;
+  frontPage: string;
+  publicationYear: string;
+  editorial: string;
+  status: boolean;
+  rating: number;
+  destination: string;
+  cosmos: string;
+}
+
+export interface BookDocumentStructure extends BookStructure {
+  _id: Types.ObjectId;
+}
