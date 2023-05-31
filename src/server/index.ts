@@ -6,7 +6,7 @@ import { generalError, notFoundError } from "./middleware/errorMiddleware.js";
 import { pingController } from "./controllers/ping/pingController.js";
 import paths from "./utils/paths/paths.js";
 import userRouter from "./routers/user/userRouter.js";
-import getBooks from "./controllers/booksControllers/booksControllers.js";
+import booksRouter from "./routers/books/booksRouter.js";
 
 const allowedOrigins = process.env.ALLOWED_ORIGIN_DEV!;
 
@@ -26,7 +26,7 @@ app.use(express.json());
 
 app.get(paths.root, pingController);
 
-app.get(paths.books, getBooks);
+app.use(paths.books, booksRouter);
 
 app.use(paths.user, userRouter);
 
