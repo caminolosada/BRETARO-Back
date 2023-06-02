@@ -14,6 +14,7 @@ const debug = createDebug(
 const getBooks = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const myBooks = await Book.find().limit(10).exec();
+
     res.status(200).json(myBooks);
   } catch {
     const booksError = new CustomError(
