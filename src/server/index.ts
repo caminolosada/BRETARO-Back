@@ -8,7 +8,10 @@ import paths from "./utils/paths/paths.js";
 import userRouter from "./routers/user/userRouter.js";
 import booksRouter from "./routers/books/booksRouter.js";
 
-const allowedOrigins = process.env.ALLOWED_ORIGIN_DEV!;
+const allowedOrigins = [
+  process.env.ALLOWED_ORIGIN_DEV!,
+  process.env.ALLOWED_ORIGIN_PROD!,
+];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
