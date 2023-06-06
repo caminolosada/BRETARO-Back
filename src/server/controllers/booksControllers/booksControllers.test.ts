@@ -2,7 +2,7 @@ import "../../../loadEnvironment.js";
 import { type NextFunction, type Request, type Response } from "express";
 import Book from "../../../database/models/Book.js";
 import booksMock from "../../../mocks/booksMocks.js";
-import getBooks from "./booksControllers.js";
+import { getBooks } from "./booksControllers.js";
 import statusCodes from "../../utils/statusCodes/statusCodes.js";
 import messages from "../../utils/messages/messages.js";
 import CustomError from "../../CustomError/CustomError.js";

@@ -1,8 +1,14 @@
 import { Router } from "express";
-import getBooks from "../../controllers/booksControllers/booksControllers.js";
+import {
+  deleteBook,
+  getBooks,
+} from "../../controllers/booksControllers/booksControllers.js";
+import paths from "../../utils/paths/paths.js";
 
 const booksRouter = Router();
 
-booksRouter.get("/", getBooks);
+booksRouter.get(paths.root, getBooks);
+
+booksRouter.delete(paths.delete, deleteBook);
 
 export default booksRouter;

@@ -3,6 +3,7 @@ export interface PathsStructure {
   user: string;
   login: string;
   books: string;
+  delete: string;
 }
 
 export interface MessagesStructure {
@@ -15,6 +16,7 @@ export interface MessagesStructure {
     password: string;
   };
   errorDb: string;
+  errorDelete: string;
 }
 
 export interface StatusStructure {

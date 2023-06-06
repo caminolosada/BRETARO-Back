@@ -10,6 +10,7 @@ const messages: MessagesStructure = {
     password: "password is not allowed to be empty",
   },
   errorDb: "Error connecting to database",
+  errorDelete: "Can't delete this book",
 };
 
 export default messages;
