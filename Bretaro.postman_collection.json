@@ -1,0 +1,58 @@
+{
+  "info": {
+    "_postman_id": "99dc6d06-2d32-488f-b02e-d3e65116b1c9",
+    "name": "Bretaro",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27058829"
+  },
+  "item": [
+    {
+      "name": "GET /",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": [""]
+        },
+        "description": "**Prueba pingController**\n\nDevuelve el mensaje \"🏓 Pong\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET / sfsdf",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/sfsdf",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["sfsdf"]
+        },
+        "description": "**Prueba GET a un endpoint inexistente**\n\nDevuelve el mensaje \"Endopoint not found\""
+      },
+      "response": []
+    },
+    {
+      "name": "GET /  books",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["books"]
+        },
+        "description": "Prueba GET a endpoint \"/books\" devuelve una colección de 1O libros desde la base de datos"
+      },
+      "response": []
+    }
+  ]
+}
