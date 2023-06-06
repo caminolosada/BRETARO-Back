@@ -18,12 +18,12 @@
           "port": "4000",
           "path": [""]
         },
-        "description": "**Prueba pingController**\n\nDevuelve el mensaje \"🏓 Pong\""
+        "description": "- Check the server response through the pingController\n- Send the message \"🏓 Pong\" in the response body and status 200"
       },
       "response": []
     },
     {
-      "name": "GET / sfsdf",
+      "name": "GET / (wrong endpoint)",
       "request": {
         "method": "GET",
         "header": [],
@@ -34,7 +34,7 @@
           "port": "4000",
           "path": ["sfsdf"]
         },
-        "description": "**Prueba GET a un endpoint inexistente**\n\nDevuelve el mensaje \"Endopoint not found\""
+        "description": "- Request to a wrong endpoint\n- Send the message \"Endopoint not found\" in the response body and status 404"
       },
       "response": []
     },
@@ -50,7 +50,39 @@
           "port": "4000",
           "path": ["books"]
         },
-        "description": "Prueba GET a endpoint \"/books\" devuelve una colección de 1O libros desde la base de datos"
+        "description": "- Request for a list of 10 books\n- Send a collection of 10 books in the response body and status 200"
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE /  books / delete / :id",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/books/delete/647711a81beb7e30d69afdff",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["books", "delete", "647711a81beb7e30d69afdff"]
+        },
+        "description": "- Request to delete a book by its id\n- Send the message \"The book has been deleted\" in the response body and status 200"
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE /  books / delete / :id (repeated or not found)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/books/delete/647711a81beb7e30d69afdff",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["books", "delete", "647711a81beb7e30d69afdff"]
+        },
+        "description": "- Request to delete a book already deleted or case in which the book id could not be found.\n- Send the message \"Can't delete this book\" in the response body and status 404."
       },
       "response": []
     }
