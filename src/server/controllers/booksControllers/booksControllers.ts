@@ -11,7 +11,11 @@ const debug = createDebug(
   "bretaro-api:controllers:booksControllers:booksControllers.js"
 );
 
-const getBooks = async (_req: Request, res: Response, next: NextFunction) => {
+export const getBooks = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const myBooks = await Book.find().limit(10).exec();
 
@@ -27,4 +31,24 @@ const getBooks = async (_req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default getBooks;
+export const deleteBook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.params;
+  try {
+    const book = await Book.findOne({ id }).exec();
+
+    if (!book) {
+      res.status(404).json({ message: messages.errorDelete });
+      return;
+    }
+
+    await Book.findByIdAndDelete(id).exec();
+
+    res.status(200).json({ message: messages.bookDeleted });
+  } catch (error: unknown) {
+    next(error);
+  }
+};
