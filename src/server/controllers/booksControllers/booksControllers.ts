@@ -41,15 +41,13 @@ export const deleteBook = async (
     const book = await Book.findOne({ id }).exec();
 
     if (!book) {
-      res
-        .status(404)
-        .json({ message: "Can't delete this book because it doesn't exist" });
+      res.status(404).json({ message: messages.errorDelete });
       return;
     }
 
     await Book.findByIdAndDelete(id).exec();
 
-    res.status(200).json({ message: "The book has been deleted" });
+    res.status(200).json({ message: messages.bookDeleted });
   } catch (error: unknown) {
     next(error);
   }

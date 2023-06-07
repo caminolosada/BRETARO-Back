@@ -17,6 +17,7 @@ export interface MessagesStructure {
   };
   errorDb: string;
   errorDelete: string;
+  bookDeleted: string;
 }
 
 export interface StatusStructure {
