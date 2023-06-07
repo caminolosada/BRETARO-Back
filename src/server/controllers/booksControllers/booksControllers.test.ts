@@ -82,7 +82,7 @@ describe("Given a deleteBook controller", () => {
       const expectedStatusCode = 200;
       const expectedMessage = messages.bookDeleted;
 
-      Book.findOne = jest.fn().mockReturnValue({
+      Book.findById = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(idBook),
       });
 
@@ -114,7 +114,7 @@ describe("Given a deleteBook controller", () => {
       const expectedStatusCode = 404;
       const expectedMessage = messages.errorDelete;
 
-      Book.findOne = jest.fn().mockReturnValue({
+      Book.findById = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(undefined),
       });
 

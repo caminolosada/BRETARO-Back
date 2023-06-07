@@ -38,7 +38,7 @@ export const deleteBook = async (
 ) => {
   const { id } = req.params;
   try {
-    const book = await Book.findOne({ id }).exec();
+    const book = await Book.findById(id).exec();
 
     if (!book) {
       res.status(404).json({ message: messages.errorDelete });
