@@ -25,4 +25,4 @@
 ### DELETE / books / delete / (id of a book already deleted or id not founded)
 
 - Request to delete a book already deleted or case in which the book id could not be found
-- Send the message "Can't delete this book" in the response body and status 404
+- Send the message "Can't delete this book because it doesn't exist" in the response body and status 404

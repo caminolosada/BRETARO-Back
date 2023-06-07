@@ -38,13 +38,16 @@ export const deleteBook = async (
 ) => {
   const { id } = req.params;
   try {
-    const deletedBook = await Book.findByIdAndDelete(id).exec();
+    const book = await Book.findOne({ id }).exec();
 
-    if (!deletedBook) {
-      const deleteError = new CustomError(`${messages.errorDelete}`, 404);
-      debug(chalk.redBright());
-      throw deleteError;
+    if (!book) {
+      res
+        .status(404)
+        .json({ message: "Can't delete this book because it doesn't exist" });
+      return;
     }
+
+    await Book.findByIdAndDelete(id).exec();
 
     res.status(200).json({ message: "The book has been deleted" });
   } catch (error: unknown) {

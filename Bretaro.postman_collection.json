@@ -71,7 +71,7 @@
       "response": []
     },
     {
-      "name": "DELETE /  books / delete / :id (repeated or not found)",
+      "name": "DELETE /  books / delete / :id (id not found)",
       "request": {
         "method": "DELETE",
         "header": [],
@@ -82,7 +82,7 @@
           "port": "4000",
           "path": ["books", "delete", "647711a81beb7e30d69afdff"]
         },
-        "description": "- Request to delete a book already deleted or case in which the book id could not be found.\n- Send the message \"Can't delete this book\" in the response body and status 404."
+        "description": "- Request to delete a book already deleted or case in which the book id could not be found.\n- Send the message \"Can't delete this book because it doesn't exist\" in the response body and status 404."
       },
       "response": []
     }
