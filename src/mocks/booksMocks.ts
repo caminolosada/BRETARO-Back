@@ -3,7 +3,7 @@ import { type BookDocumentStructure } from "../types/types";
 
 const booksMock: BookDocumentStructure[] = [
   {
-    _id: new Types.ObjectId(),
+    _id: new Types.ObjectId("647711a81beb7e30d69afe00"),
     title: "El desorden que dejas",
     author: "Carlos Montero",
     frontPage:

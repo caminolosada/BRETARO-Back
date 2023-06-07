@@ -41,13 +41,13 @@ export const deleteBook = async (
     const book = await Book.findById(id).exec();
 
     if (!book) {
-      res.status(404).json({ message: messages.errorDelete });
+      res.status(statusCodes.notFound).json({ message: messages.errorDelete });
       return;
     }
 
     await Book.findByIdAndDelete(id).exec();
 
-    res.status(200).json({ message: messages.bookDeleted });
+    res.status(statusCodes.ok).json({ message: messages.bookDeleted });
   } catch (error: unknown) {
     next(error);
   }
