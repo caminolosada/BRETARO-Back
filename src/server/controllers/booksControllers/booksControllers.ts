@@ -41,8 +41,11 @@ export const deleteBook = async (
     const book = await Book.findById(id).exec();
 
     if (!book) {
-      res.status(statusCodes.notFound).json({ message: messages.errorDelete });
-      return;
+      const deleteError = new CustomError(
+        `${messages.errorDelete}`,
+        statusCodes.notFound
+      );
+      throw deleteError;
     }
 
     await Book.findByIdAndDelete(id).exec();
