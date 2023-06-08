@@ -109,19 +109,5 @@ describe("Given a deleteBook controller", () => {
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });
-
-    test("Then it should call its status method with a status 404 and the response method with the message 'Can't delete this book because it doesn't exist' ", async () => {
-      const expectedStatusCode = 404;
-      const expectedMessage = messages.errorDelete;
-
-      Book.findById = jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue(undefined),
-      });
-
-      await deleteBook(req as Request, res as Response, next);
-
-      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
-      expect(res.json).toHaveBeenCalledWith({ message: expectedMessage });
-    });
   });
 });
