@@ -85,6 +85,31 @@
         "description": "- Request to delete a book already deleted or case in which the book id could not be found.\n- Send the message \"Can't delete this book because it doesn't exist\" in the response body and status 404."
       },
       "response": []
+    },
+    {
+      "name": "POST / books / add",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"La uruguaya\",\r\n  \"author\": \"Pedro Mairal\",\r\n  \"frontPage\": \"image_la_uruguaya.jpg\",\r\n  \"publicationYear\": \"2016\",\r\n  \"editorial\": \"Libros del Asteroide\",\r\n  \"status\": true,\r\n  \"rating\": 4,\r\n  \"destination\": \"keep\",\r\n  \"cosmos\":\r\n    \"Un escritor argentino se embarca en un viaje a Montevideo que lo llevará a cuestionarse su vida, su matrimonio y sus ambiciones literarias.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/books/add",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["books", "add"]
+        },
+        "description": "- Request to add a book\n- Send the book created and the message \"The book has been created\"\n- Needs to add the object wiht the new book in the request body (as JSON)"
+      },
+      "response": []
     }
   ]
 }
