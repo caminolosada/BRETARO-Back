@@ -145,11 +145,11 @@ describe("Given a addBook controller", () => {
     });
   });
 
-  describe("When it receives an invalid book on its body and a next function", () => {
+  describe("When it receives an invalid book on its body, a response and a next function", () => {
     test("Then it should call the next function with the message 'Can't create this book'", async () => {
-      const error = new CustomError(messages.errorAdd, statusCodes.notFound);
+      const error = new Error(messages.errorAdd);
 
-      Book.create = jest.fn().mockResolvedValue(null);
+      Book.create = jest.fn().mockRejectedValue(error);
 
       await addBook(
         req as CustomRequest,

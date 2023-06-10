@@ -70,14 +70,6 @@ export const addBook = async (
   try {
     const addedBook = await Book.create({ ...newBook });
 
-    if (!addedBook) {
-      const addedError = new CustomError(
-        messages.errorAdd,
-        statusCodes.notFound
-      );
-      throw addedError;
-    }
-
     res
       .status(statusCodes.created)
       .json({ messages: messages.bookAdded, addedBook });
