@@ -30,7 +30,7 @@ export const generalError = (
   if (error instanceof ValidationError && error.details.body) {
     const validationError = error.details.body
       .map((joiError) => joiError.message)
-      .join(" & ")
+      .join(" , ")
       .replaceAll('"', "");
 
     (error as CustomError).publicMessage = validationError;
