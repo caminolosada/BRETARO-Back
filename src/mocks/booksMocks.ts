@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
-import { type BookDocumentStructure } from "../types/types";
+import { type BookStructure, type BookDocumentStructure } from "../types/types";
 
-const booksMock: BookDocumentStructure[] = [
+export const booksMock: BookDocumentStructure[] = [
   {
     _id: new Types.ObjectId("647711a81beb7e30d69afe00"),
     title: "El desorden que dejas",
@@ -32,4 +32,15 @@ const booksMock: BookDocumentStructure[] = [
   },
 ];
 
-export default booksMock;
+export const addBookMock: BookStructure = {
+  title: "La uruguaya",
+  author: "Pedro Mairal",
+  frontPage: "image_la_uruguaya.jpg",
+  publicationYear: "2016",
+  editorial: "Libros del Asteroide",
+  status: true,
+  rating: 4,
+  destination: "keep",
+  cosmos:
+    "Un escritor argentino se embarca en un viaje a Montevideo que lo llevará a cuestionarse su vida, su matrimonio y sus ambiciones literarias.",
+};

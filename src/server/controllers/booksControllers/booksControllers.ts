@@ -6,6 +6,10 @@ import Book from "../../../database/models/Book.js";
 import messages from "../../utils/messages/messages.js";
 import CustomError from "../../CustomError/CustomError.js";
 import statusCodes from "../../utils/statusCodes/statusCodes.js";
+import {
+  type CustomRequest,
+  type BookStructure,
+} from "../../../types/types.js";
 
 const debug = createDebug(
   "bretaro-api:controllers:booksControllers:booksControllers.js"
@@ -52,6 +56,33 @@ export const deleteBook = async (
 
     res.status(statusCodes.ok).json({ message: messages.bookDeleted });
   } catch (error: unknown) {
+    next(error);
+  }
+};
+
+export const addBook = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const newBook: BookStructure = req.body;
+
+  try {
+    const addedBook = await Book.create({ ...newBook });
+
+    if (!addedBook) {
+      const addedError = new CustomError(
+        messages.errorAdd,
+        statusCodes.notFound
+      );
+      throw addedError;
+    }
+
+    res
+      .status(statusCodes.created)
+      .json({ messages: messages.bookAdded, addedBook });
+  } catch (error: unknown) {
+    (error as Error).message = messages.errorAdd;
     next(error);
   }
 };

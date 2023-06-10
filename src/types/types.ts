@@ -31,3 +31,7 @@ export interface BookStructure {
 export interface BookDocumentStructure extends BookStructure {
   _id: Types.ObjectId;
 }
+
+export interface CustomRequest extends Request {
+  body: BookStructure;
+}
