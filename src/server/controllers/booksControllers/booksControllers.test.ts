@@ -1,12 +1,13 @@
 import "../../../loadEnvironment.js";
 import { type NextFunction, type Request, type Response } from "express";
 import Book from "../../../database/models/Book.js";
-import booksMock from "../../../mocks/booksMocks.js";
-import { deleteBook, getBooks } from "./booksControllers.js";
+import { booksMock, addBookMock } from "../../../mocks/booksMocks.js";
+import { addBook, deleteBook, getBooks } from "./booksControllers.js";
 import statusCodes from "../../utils/statusCodes/statusCodes.js";
 import messages from "../../utils/messages/messages.js";
 import CustomError from "../../CustomError/CustomError.js";
 import { Types } from "mongoose";
+import { type CustomRequest } from "../../../types/types.js";
 
 type CustomResponse = Pick<Response, "status" | "json">;
 
@@ -108,6 +109,55 @@ describe("Given a deleteBook controller", () => {
       await deleteBook(req as Request, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given a addBook controller", () => {
+  const req: Partial<CustomRequest> = {
+    body: addBookMock,
+  };
+  const res: CustomResponse = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  };
+  const next = jest.fn();
+
+  describe("When it receives a request with a valid book on its body, a response and a next function", () => {
+    test("Then it should calls the response's method with status code '201' the message 'The book has been created' and the book create", async () => {
+      const expectedStatusCode = statusCodes.created;
+      const expectedMessage = messages.bookAdded;
+      const expectedResult = {
+        messages: expectedMessage,
+        addedBook: addBookMock,
+      };
+
+      Book.create = jest.fn().mockResolvedValue(addBookMock);
+
+      await addBook(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
+      expect(res.json).toHaveBeenCalledWith(expectedResult);
+    });
+  });
+
+  describe("When it receives an invalid book on its body and a next function", () => {
+    test("Then it should call the next function with the message 'Can't create this book'", async () => {
+      const error = new CustomError(messages.errorAdd, statusCodes.notFound);
+
+      Book.create = jest.fn().mockResolvedValue(null);
+
+      await addBook(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(next).toHaveBeenCalledWith(error);
     });
   });
 });

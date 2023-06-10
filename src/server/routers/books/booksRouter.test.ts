@@ -3,7 +3,7 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import connectToDataBase from "../../../database/connectToDataBase";
 import mongoose, { Types } from "mongoose";
 import Book from "../../../database/models/Book";
-import booksMock from "../../../mocks/booksMocks.js";
+import { booksMock } from "../../../mocks/booksMocks.js";
 import statusCodes from "../../utils/statusCodes/statusCodes";
 import { app } from "../..";
 import paths from "../../utils/paths/paths.js";
