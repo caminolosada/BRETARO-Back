@@ -8,6 +8,7 @@ import statusCodes from "../../utils/statusCodes/statusCodes";
 import { app } from "../..";
 import paths from "../../utils/paths/paths.js";
 import messages from "../../utils/messages/messages";
+import { addBookMock } from "../../../mocks/booksMocks.js";
 
 let server: MongoMemoryServer;
 
@@ -82,6 +83,40 @@ describe("Given a DELETE '/books/delete/:id' endpoint", () => {
 
         expect(response.body.message).toBe(expectedMessage);
       });
+    });
+  });
+});
+
+describe("Given a POST '/books/add' endpoint", () => {
+  describe("When it receives a valid book in the body's request", () => {
+    test("Then it should call the response's method status with 201, the message 'The book has been created' and the new book created", async () => {
+      const expectedStatusCode = statusCodes.created;
+
+      const expectedNewBookProperty = "addedBook";
+      const expectedMessageProperty = "message";
+
+      const response = await request(app)
+        .post(`${paths.books}/add`)
+        .send(addBookMock)
+        .expect(expectedStatusCode);
+
+      expect(response.body).toHaveProperty(expectedNewBookProperty);
+      expect(response.body).toHaveProperty(expectedMessageProperty);
+    });
+  });
+
+  describe("When it receives an invalid book in the body's request, as a book without author required property", () => {
+    test("Then it should call the response's method '400' and the message 'author is not allowed to be empty'", async () => {
+      const expectedStatusCode = statusCodes.badRequest;
+      const expectedMessage = "author is not allowed to be empty";
+      addBookMock.author = "";
+
+      const response = await request(app)
+        .post(`${paths.books}/add`)
+        .send(addBookMock)
+        .expect(expectedStatusCode);
+
+      expect(response.body.message).toBe(expectedMessage);
     });
   });
 });
