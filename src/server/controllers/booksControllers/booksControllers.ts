@@ -72,7 +72,7 @@ export const addBook = async (
 
     res
       .status(statusCodes.created)
-      .json({ messages: messages.bookAdded, addedBook });
+      .json({ message: messages.bookAdded, addedBook });
   } catch (error: unknown) {
     (error as Error).message = messages.errorAdd;
     next(error);

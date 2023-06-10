@@ -128,7 +128,7 @@ describe("Given a addBook controller", () => {
       const expectedStatusCode = statusCodes.created;
       const expectedMessage = messages.bookAdded;
       const expectedResult = {
-        messages: expectedMessage,
+        message: expectedMessage,
         addedBook: addBookMock,
       };
 
