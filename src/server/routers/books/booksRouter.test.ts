@@ -48,8 +48,8 @@ describe("Given a GET '/books' endopoint", () => {
 
       const response = await request(app).get(`${paths.books}`);
 
-      expect(response.body[0].title).toBe(expectedTitle1);
-      expect(response.body[1].title).toBe(expectedTitle2);
+      expect(response.body[1].title).toBe(expectedTitle1);
+      expect(response.body[0].title).toBe(expectedTitle2);
     });
   });
 });

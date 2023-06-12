@@ -24,6 +24,7 @@ describe("Given a getBooks controller", () => {
   const next = jest.fn();
   describe("When it receives a request", () => {
     Book.find = jest.fn().mockReturnValue({
+      sort: jest.fn().mockReturnThis(),
       limit: jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(booksMock),
       }),
@@ -124,7 +125,7 @@ describe("Given a addBook controller", () => {
   const next = jest.fn();
 
   describe("When it receives a request with a valid book on its body, a response and a next function", () => {
-    test("Then it should calls the response's method with status code '201' the message 'The book has been created' and the book create", async () => {
+    test("Then it should calls the response's method with status code '201' the message 'The book has been created' and the book created", async () => {
       const expectedStatusCode = statusCodes.created;
       const expectedMessage = messages.bookAdded;
       const expectedResult = {

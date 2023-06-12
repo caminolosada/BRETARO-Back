@@ -11,7 +11,7 @@ const addBookSchema = {
     status: Joi.boolean().required(),
     rating: Joi.number(),
     destination: Joi.string().required(),
-    cosmos: Joi.string(),
+    cosmos: Joi.string().allow(""),
   }),
 };
 
