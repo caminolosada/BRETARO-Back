@@ -176,7 +176,7 @@ describe("Given a getBookById controller", () => {
 
   const next = jest.fn();
   describe("When it receives a request with with a valid id on its body, a response and a next function", () => {
-    test("Then it should call the response's method status with 200 and the books that corresponds to that id", async () => {
+    test("Then it should call the response's method status with 200 and the book that corresponds to that id", async () => {
       const idBook = "647711a81beb7e30d69afe00";
       const expectedBook = booksMock[0];
 
@@ -186,7 +186,7 @@ describe("Given a getBookById controller", () => {
 
       const expectedStatusCode = statusCodes.ok;
 
-      Book.findOne = jest.fn().mockReturnValue({
+      Book.findById = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(expectedBook),
       });
 
@@ -210,7 +210,7 @@ describe("Given a getBookById controller", () => {
         params: { id: idBook },
       };
 
-      Book.findOne = jest.fn().mockReturnValue({
+      Book.findById = jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(null),
       });
 
