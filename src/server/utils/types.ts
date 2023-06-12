@@ -21,6 +21,7 @@ export interface MessagesStructure {
   bookDeleted: string;
   errorAdd: string;
   bookAdded: string;
+  bookNotFound: string;
 }
 
 export interface StatusStructure {

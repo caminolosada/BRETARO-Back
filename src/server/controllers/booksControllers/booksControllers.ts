@@ -78,3 +78,26 @@ export const addBook = async (
     next(error);
   }
 };
+
+export const getBookById = async (
+  req: Request<{ bookId: string }>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { bookId } = req.params;
+  try {
+    const myBook = await Book.findOne({ _id: bookId });
+
+    if (!myBook) {
+      const noBookError = new CustomError(
+        `${messages.bookNotFound}`,
+        statusCodes.notFound
+      );
+      throw noBookError;
+    }
+
+    res.status(statusCodes.ok).json({ myBook });
+  } catch (error: unknown) {
+    next(error);
+  }
+};

@@ -14,6 +14,7 @@ const messages: MessagesStructure = {
   bookDeleted: "The book has been deleted",
   errorAdd: "Can't create this book",
   bookAdded: "The book has been created",
+  bookNotFound: "Can't found this book",
 };
 
 export default messages;
