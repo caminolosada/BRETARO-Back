@@ -86,7 +86,7 @@ export const getBookById = async (
 ) => {
   const { id } = req.params;
   try {
-    const myBook = await Book.findOne({ _id: id }).exec();
+    const myBook = await Book.findById(id).exec();
     if (!myBook) {
       const noBookError = new CustomError(
         `${messages.bookNotFound}`,
