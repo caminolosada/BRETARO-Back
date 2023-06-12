@@ -2,7 +2,12 @@ import "../../../loadEnvironment.js";
 import { type NextFunction, type Request, type Response } from "express";
 import Book from "../../../database/models/Book.js";
 import { booksMock, addBookMock } from "../../../mocks/booksMocks.js";
-import { addBook, deleteBook, getBooks } from "./booksControllers.js";
+import {
+  addBook,
+  deleteBook,
+  getBookById,
+  getBooks,
+} from "./booksControllers.js";
 import statusCodes from "../../utils/statusCodes/statusCodes.js";
 import messages from "../../utils/messages/messages.js";
 import CustomError from "../../CustomError/CustomError.js";
@@ -159,6 +164,63 @@ describe("Given a addBook controller", () => {
       );
 
       expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+});
+
+describe("Given a getBookById controller", () => {
+  const res: CustomResponse = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  };
+
+  const next = jest.fn();
+  describe("When it receives a request with with a valid id on its body, a response and a next function", () => {
+    test("Then it should call the response's method status with 200 and the books that corresponds to that id", async () => {
+      const idBook = "647711a81beb7e30d69afe00";
+      const expectedBook = booksMock[0];
+
+      const req: Partial<Request> = {
+        params: { id: idBook },
+      };
+
+      const expectedStatusCode = statusCodes.ok;
+
+      Book.findOne = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(expectedBook),
+      });
+
+      await getBookById(
+        req as Request<{ id: string }>,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
+      expect(res.json).toHaveBeenCalledWith({ myBook: expectedBook });
+    });
+  });
+
+  describe("When it receives a request with with an invalid id on its body, a response and a next function", () => {
+    test("Then it should call the next function with the error message 'Can't found this book'", async () => {
+      const idBook = "invalidId";
+      const expectedError = new Error(`${messages.bookNotFound}`);
+
+      const req: Partial<Request> = {
+        params: { id: idBook },
+      };
+
+      Book.findOne = jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      });
+
+      await getBookById(
+        req as Request<{ id: string }>,
+        res as Response,
+        next as NextFunction
+      );
+
+      expect(next).toHaveBeenCalledWith(expectedError);
     });
   });
 });

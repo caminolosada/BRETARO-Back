@@ -5,6 +5,7 @@ export interface PathsStructure {
   books: string;
   delete: string;
   add: string;
+  myBook: string;
 }
 
 export interface MessagesStructure {
@@ -21,6 +22,7 @@ export interface MessagesStructure {
   bookDeleted: string;
   errorAdd: string;
   bookAdded: string;
+  bookNotFound: string;
 }
 
 export interface StatusStructure {
