@@ -3,7 +3,7 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import connectToDataBase from "../../../database/connectToDataBase";
 import mongoose, { Types } from "mongoose";
 import Book from "../../../database/models/Book";
-import { booksMock } from "../../../mocks/booksMocks.js";
+import { booksMock, booksMockById } from "../../../mocks/booksMocks.js";
 import statusCodes from "../../utils/statusCodes/statusCodes";
 import { app } from "../..";
 import paths from "../../utils/paths/paths.js";
@@ -26,11 +26,15 @@ afterEach(async () => {
   await Book.deleteMany();
 });
 
-describe("Given a GET '/books' endopoint", () => {
-  beforeEach(async () => {
-    await Book.create(booksMock);
-  });
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
+beforeEach(async () => {
+  await Book.create(booksMock);
+});
+
+describe("Given a GET '/books' endopoint", () => {
   describe("When it receives a request", () => {
     test("Then it should call the response's method status with 200 and a collection of two books", async () => {
       const expectedStatusCode = statusCodes.ok;
@@ -55,9 +59,6 @@ describe("Given a GET '/books' endopoint", () => {
 });
 
 describe("Given a DELETE '/books/delete/:id' endpoint", () => {
-  beforeEach(async () => {
-    await Book.create(booksMock);
-  });
   describe("When it receives a request with an id of an existing book", () => {
     test("Then it should call the response's method status with 200 and the message 'The book has been deleted'", async () => {
       const expectedStatusCode = statusCodes.ok;
@@ -114,6 +115,33 @@ describe("Given a POST '/books/add' endpoint", () => {
       const response = await request(app)
         .post(`${paths.books}/add`)
         .send(addBookMock)
+        .expect(expectedStatusCode);
+
+      expect(response.body.message).toBe(expectedMessage);
+    });
+  });
+});
+
+describe("Given a GET '/books/:id' endpoint", () => {
+  describe("When it receives a valid id in the body's request", () => {
+    test("Then it should responds with the book that corresponds to that id", async () => {
+      const expectedStatusCode = statusCodes.ok;
+
+      const response = await request(app)
+        .get(`${paths.books}/${booksMock[1]._id.toString()}`)
+        .expect(expectedStatusCode);
+
+      expect(response.body.myBook).toStrictEqual(booksMockById[1]);
+    });
+  });
+
+  describe("When it receives an invalid id in the body's request", () => {
+    test("Then it should responds with status 404 and the message 'Can't found this book'", async () => {
+      const expectedStatusCode = statusCodes.notFound;
+      const expectedMessage = messages.bookNotFound;
+
+      const response = await request(app)
+        .get(`${paths.books}/${booksMockById[0].id}`)
         .expect(expectedStatusCode);
 
       expect(response.body.message).toBe(expectedMessage);
