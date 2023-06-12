@@ -80,13 +80,13 @@ export const addBook = async (
 };
 
 export const getBookById = async (
-  req: Request<{ bookId: string }>,
+  req: Request<{ id: string }>,
   res: Response,
   next: NextFunction
 ) => {
-  const { bookId } = req.params;
+  const { id } = req.params;
   try {
-    const myBook = await Book.findOne({ _id: bookId });
+    const myBook = await Book.findOne({ _id: id }).exec();
 
     if (!myBook) {
       const noBookError = new CustomError(
