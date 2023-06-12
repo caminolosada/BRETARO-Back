@@ -11,6 +11,7 @@ import booksRouter from "./routers/books/booksRouter.js";
 const allowedOrigins = [
   process.env.ALLOWED_ORIGIN_DEV!,
   process.env.ALLOWED_ORIGIN_PROD!,
+  process.env.ALLOWED_ORIGIN_PREVIEW!,
 ];
 
 const options: cors.CorsOptions = {
