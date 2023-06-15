@@ -47,13 +47,13 @@ describe("Given a GET '/books' endopoint", () => {
     });
 
     test("Then it should respond with a collection of two books titled 'El desorden que dejas' and 'La ridícula idea de no volver a verte'", async () => {
-      const expectedTitle1 = booksMock[0].title;
-      const expectedTitle2 = booksMock[1].title;
+      const expectedTitle1 = booksMock[1].title;
+      const expectedTitle2 = booksMock[0].title;
 
       const response = await request(app).get(`${paths.books}`);
 
-      expect(response.body[1].title).toBe(expectedTitle1);
-      expect(response.body[0].title).toBe(expectedTitle2);
+      expect(response.body[0].title).toBe(expectedTitle1);
+      expect(response.body[1].title).toBe(expectedTitle2);
     });
   });
 });
@@ -139,9 +139,10 @@ describe("Given a GET '/books/:id' endpoint", () => {
     test("Then it should responds with status 404 and the message 'Can't found this book'", async () => {
       const expectedStatusCode = statusCodes.notFound;
       const expectedMessage = messages.bookNotFound;
+      const failedId = "64874d6ffa8ea2d9c28c33";
 
       const response = await request(app)
-        .get(`${paths.books}/${booksMockById[0].id}`)
+        .get(`${paths.books}/${failedId}`)
         .expect(expectedStatusCode);
 
       expect(response.body.message).toBe(expectedMessage);
