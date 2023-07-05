@@ -1,5 +1,16 @@
 # BRETARO
 
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn)
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn&metric=coverage)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn)
+
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn&metric=bugs)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Camino-Losada-Final-Project-back-202304-bcn)
+
 ## Endpoints
 
 ### GET /
