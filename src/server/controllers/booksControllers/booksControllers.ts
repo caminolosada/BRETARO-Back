@@ -23,11 +23,12 @@ export const getBooks = async (
   try {
     const myBooks = await Book.find().sort({ _id: -1 }).limit(10).exec();
 
-    res.status(200).json(myBooks);
+    res.status(statusCodes.ok).json(myBooks);
   } catch {
     const booksError = new CustomError(
       `${messages.errorDb}: can't get books`,
-      statusCodes.internalServerError
+      statusCodes.notFound,
+      messages.bookNotFound
     );
 
     debug(chalk.redBright(booksError.message));
@@ -87,16 +88,15 @@ export const getBookById = async (
   const { id } = req.params;
   try {
     const myBook = await Book.findById(id).exec();
-    if (!myBook) {
-      const noBookError = new CustomError(
-        `${messages.bookNotFound}`,
-        statusCodes.notFound
-      );
-      throw noBookError;
-    }
 
     res.status(statusCodes.ok).json({ myBook });
-  } catch (error: unknown) {
-    next(error);
+  } catch {
+    const noBookError = new CustomError(
+      `${messages.bookNotFound}`,
+      statusCodes.notFound,
+      `${messages.bookNotFound}`
+    );
+
+    next(noBookError);
   }
 };

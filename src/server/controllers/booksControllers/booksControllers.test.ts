@@ -175,7 +175,8 @@ describe("Given a getBookById controller", () => {
   };
 
   const next = jest.fn();
-  describe("When it receives a request with with a valid id on its body, a response and a next function", () => {
+
+  describe("When it receives a request with a valid id on its body, a response and a next function", () => {
     test("Then it should call the response's method status with 200 and the book that corresponds to that id", async () => {
       const idBook = "647711a81beb7e30d69afe00";
       const expectedBook = booksMock[0];
@@ -201,17 +202,21 @@ describe("Given a getBookById controller", () => {
     });
   });
 
-  describe("When it receives a request with with an invalid id on its body, a response and a next function", () => {
+  describe("When it receives a request with an invalid id on its body, a response and a next function", () => {
     test("Then it should call the next function with the error message 'Can't found this book'", async () => {
       const idBook = "invalidId";
-      const expectedError = new Error(`${messages.bookNotFound}`);
+      const expectedError = new CustomError(
+        `${messages.bookNotFound}`,
+        statusCodes.notFound,
+        `${messages.bookNotFound}`
+      );
 
       const req: Partial<Request> = {
         params: { id: idBook },
       };
 
       Book.findById = jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue(null),
+        exec: jest.fn().mockRejectedValue(expectedError),
       });
 
       await getBookById(
