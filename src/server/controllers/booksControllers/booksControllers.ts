@@ -9,16 +9,18 @@ import statusCodes from "../../utils/statusCodes/statusCodes.js";
 import {
   type CustomRequest,
   type BookStructure,
+  type CustomUpdateRequest,
 } from "../../../types/types.js";
+import { Types } from "mongoose";
 
 const debug = createDebug(
-  "bretaro-api:controllers:booksControllers:booksControllers.js"
+  "bretaro-api:controllers:booksControllers:booksControllers.js",
 );
 
 export const getBooks = async (
   _req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const myBooks = await Book.find().sort({ _id: -1 }).limit(10).exec();
@@ -28,7 +30,7 @@ export const getBooks = async (
     const booksError = new CustomError(
       `${messages.errorDb}: can't get books`,
       statusCodes.notFound,
-      messages.bookNotFound
+      messages.bookNotFound,
     );
 
     debug(chalk.redBright(booksError.message));
@@ -39,7 +41,7 @@ export const getBooks = async (
 export const deleteBook = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { id } = req.params;
   try {
@@ -48,7 +50,7 @@ export const deleteBook = async (
     if (!book) {
       const deleteError = new CustomError(
         `${messages.errorDelete}`,
-        statusCodes.notFound
+        statusCodes.notFound,
       );
       throw deleteError;
     }
@@ -64,7 +66,7 @@ export const deleteBook = async (
 export const addBook = async (
   req: CustomRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const newBook: BookStructure = req.body;
 
@@ -83,7 +85,7 @@ export const addBook = async (
 export const getBookById = async (
   req: Request<{ id: string }>,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { id } = req.params;
   try {
@@ -94,9 +96,37 @@ export const getBookById = async (
     const noBookError = new CustomError(
       `${messages.bookNotFound}`,
       statusCodes.notFound,
-      `${messages.bookNotFound}`
+      `${messages.bookNotFound}`,
     );
 
     next(noBookError);
+  }
+};
+
+export const updateBook = async (
+  req: CustomUpdateRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { body } = req;
+
+    const updatedBook = await Book.findByIdAndUpdate(
+      body.id,
+      { ...body, _id: new Types.ObjectId(body.id) },
+      { returnDocument: "after" },
+    ).exec();
+
+    res
+      .status(statusCodes.ok)
+      .json({ message: messages.bookUpdated, updatedBook });
+  } catch {
+    const noUpdateError = new CustomError(
+      `${messages.errorUpdated}`,
+      statusCodes.badRequest,
+      `${messages.errorUpdated}`,
+    );
+
+    next(noUpdateError);
   }
 };

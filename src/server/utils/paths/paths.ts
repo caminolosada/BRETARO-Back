@@ -8,6 +8,7 @@ const paths: PathsStructure = {
   delete: "/delete/:id",
   add: "/add",
   myBook: "/:id",
+  update: "/update",
 };
 
 export default paths;
