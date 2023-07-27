@@ -15,7 +15,7 @@ const messages: MessagesStructure = {
   errorAdd: "Can't create this book",
   bookAdded: "The book has been created",
   bookNotFound: "Can't found this book",
-  errorUpdated: "Cant update this book",
+  errorUpdated: "Can't update this book",
   bookUpdated: "The book has been succesfully updated",
 };
 
