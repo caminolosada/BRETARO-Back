@@ -1,7 +1,11 @@
 import "../../../loadEnvironment.js";
 import { type NextFunction, type Request, type Response } from "express";
 import Book from "../../../database/models/Book.js";
-import { booksMock, addBookMock } from "../../../mocks/booksMocks.js";
+import {
+  booksMock,
+  addBookMock,
+  booksMockById,
+} from "../../../mocks/booksMocks.js";
 import {
   addBook,
   deleteBook,
@@ -12,7 +16,12 @@ import statusCodes from "../../utils/statusCodes/statusCodes.js";
 import messages from "../../utils/messages/messages.js";
 import CustomError from "../../CustomError/CustomError.js";
 import { Types } from "mongoose";
-import { type CustomRequest } from "../../../types/types.js";
+import {
+  type CustomUpdateRequest,
+  type CustomRequest,
+} from "../../../types/types.js";
+import { updateBookMock } from "../../../mocks/booksMocks.js";
+import { updateBook } from "./booksControllers.js";
 
 type CustomResponse = Pick<Response, "status" | "json">;
 
@@ -55,7 +64,7 @@ describe("Given a getBooks controller", () => {
     test("Then it should call the next function with the error 'Error connecting to database: can't get books'", async () => {
       const error = new CustomError(
         `${messages.errorDb}: can't get books`,
-        statusCodes.internalServerError
+        statusCodes.internalServerError,
       );
 
       Book.find = jest.fn().mockReturnValue({
@@ -86,7 +95,7 @@ describe("Given a deleteBook controller", () => {
 
   describe("When it receives a request with an existing book id , a response and next function", () => {
     test("Then it should call its status method with a status 200 and the response method with the message 'The book has been deleted'", async () => {
-      const expectedStatusCode = 200;
+      const expectedStatusCode = statusCodes.ok;
       const expectedMessage = messages.bookDeleted;
 
       Book.findById = jest.fn().mockReturnValue({
@@ -143,7 +152,7 @@ describe("Given a addBook controller", () => {
       await addBook(
         req as CustomRequest,
         res as Response,
-        next as NextFunction
+        next as NextFunction,
       );
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
@@ -160,7 +169,7 @@ describe("Given a addBook controller", () => {
       await addBook(
         req as CustomRequest,
         res as Response,
-        next as NextFunction
+        next as NextFunction,
       );
 
       expect(next).toHaveBeenCalledWith(error);
@@ -194,7 +203,7 @@ describe("Given a getBookById controller", () => {
       await getBookById(
         req as Request<{ id: string }>,
         res as Response,
-        next as NextFunction
+        next as NextFunction,
       );
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
@@ -208,7 +217,7 @@ describe("Given a getBookById controller", () => {
       const expectedError = new CustomError(
         `${messages.bookNotFound}`,
         statusCodes.notFound,
-        `${messages.bookNotFound}`
+        `${messages.bookNotFound}`,
       );
 
       const req: Partial<Request> = {
@@ -222,7 +231,65 @@ describe("Given a getBookById controller", () => {
       await getBookById(
         req as Request<{ id: string }>,
         res as Response,
-        next as NextFunction
+        next as NextFunction,
+      );
+
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
+  });
+});
+
+describe("Given a updateBook controller", () => {
+  const req: Partial<CustomUpdateRequest> = {
+    body: booksMockById[1],
+  };
+  const res: Partial<Response> = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  };
+
+  const next = jest.fn();
+
+  describe("When it receives a request with a valid book, a response and a next function", () => {
+    test("Then it should calls the response's method with status code '200', the message 'The book has been succesfully updated' and the book updated", async () => {
+      const expectedStatusCode = statusCodes.ok;
+      const expectedMessage = "The book has been succesfully updated";
+      const expectedResult = {
+        message: expectedMessage,
+        updatedBook: updateBookMock,
+      };
+
+      Book.findByIdAndUpdate = jest
+        .fn()
+        .mockReturnValue({ exec: jest.fn().mockResolvedValue(updateBookMock) });
+
+      await updateBook(
+        req as CustomUpdateRequest,
+        res as Response,
+        next as NextFunction,
+      );
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
+      expect(res.json).toHaveBeenCalledWith(expectedResult);
+    });
+  });
+
+  describe("When it receives and invalid book on its body, a response and a next function", () => {
+    test("Then it should call the next function with the error message 'Can't update this book' and status code '400' ", async () => {
+      const expectedError = new CustomError(
+        `${messages.errorUpdated}`,
+        statusCodes.badRequest,
+        `${messages.errorUpdated}`,
+      );
+
+      Book.findByIdAndUpdate = jest
+        .fn()
+        .mockReturnValue({ exec: jest.fn().mockRejectedValue(expectedError) });
+
+      await updateBook(
+        req as CustomUpdateRequest,
+        res as Response,
+        next as NextFunction,
       );
 
       expect(next).toHaveBeenCalledWith(expectedError);
