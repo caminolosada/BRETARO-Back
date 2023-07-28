@@ -1,5 +1,9 @@
 import { Types } from "mongoose";
-import { type BookStructure, type BookDocumentStructure } from "../types/types";
+import {
+  type BookStructure,
+  type BookDocumentStructure,
+  type BookToUpdateStructure,
+} from "../types/types";
 
 export const booksMock: BookDocumentStructure[] = [
   {
@@ -75,3 +79,17 @@ export const booksMockById = [
       "Morir es una experiencia única y fascinante y también algo muy divertido, aunque no para el muerto, lógicamente.",
   },
 ];
+
+export const updateBookMock: BookToUpdateStructure = {
+  id: "648703abee528da727184560",
+  title: "La ridícula idea",
+  author: "Rosa Montero",
+  frontPage:
+    "https://res.cloudinary.com/dg1skxpqt/image/upload/v1685524636/9788432239939_nbrsas.webp",
+  publicationYear: "2013",
+  editorial: "Seix Barral",
+  status: true,
+  rating: 5,
+  destination: "keep",
+  cosmos: "Morir es una experiencia única",
+};

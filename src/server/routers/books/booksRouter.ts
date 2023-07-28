@@ -4,6 +4,7 @@ import {
   deleteBook,
   getBookById,
   getBooks,
+  updateBook,
 } from "../../controllers/booksControllers/booksControllers.js";
 import paths from "../../utils/paths/paths.js";
 import { validate } from "express-validation";
@@ -20,7 +21,9 @@ booksRouter.delete(paths.delete, deleteBook);
 booksRouter.post(
   paths.add,
   validate(addBookSchema, {}, { abortEarly: false }),
-  addBook
+  addBook,
 );
+
+booksRouter.put("/", updateBook);
 
 export default booksRouter;

@@ -37,3 +37,13 @@
 
 - Request to delete a book already deleted or case in which the book id could not be found
 - Send the message "Can't delete this book because it doesn't exist" in the response body and status 404
+
+### POST / books /
+
+- Request to update a selected book (by its id)
+- Send the message "The book has been succesfully updated", the updated information of the book in the response body and status 200.
+
+### POST / books / (wrong id or id not founded)
+
+- Request to update a book which id can't be found
+- Send the message "Can't update this book" in the response body and status 400.
