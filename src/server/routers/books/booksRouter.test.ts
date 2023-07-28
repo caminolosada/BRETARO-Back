@@ -3,7 +3,11 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import connectToDataBase from "../../../database/connectToDataBase";
 import mongoose, { Types } from "mongoose";
 import Book from "../../../database/models/Book";
-import { booksMock, booksMockById } from "../../../mocks/booksMocks.js";
+import {
+  booksMock,
+  booksMockById,
+  updateBookMock,
+} from "../../../mocks/booksMocks.js";
 import statusCodes from "../../utils/statusCodes/statusCodes";
 import { app } from "../..";
 import paths from "../../utils/paths/paths.js";
@@ -92,17 +96,17 @@ describe("Given a POST '/books/add' endpoint", () => {
   describe("When it receives a valid book in the body's request", () => {
     test("Then it should call the response's method status with 201, the message 'The book has been created' and the new book created", async () => {
       const expectedStatusCode = statusCodes.created;
+      const expectedMessage = messages.bookAdded;
 
       const expectedNewBookProperty = "addedBook";
-      const expectedMessageProperty = "message";
 
       const response = await request(app)
-        .post(`${paths.books}/add`)
+        .post(`${paths.books}${paths.add}`)
         .send(addBookMock)
         .expect(expectedStatusCode);
 
       expect(response.body).toHaveProperty(expectedNewBookProperty);
-      expect(response.body).toHaveProperty(expectedMessageProperty);
+      expect(response.body.message).toStrictEqual(expectedMessage);
     });
   });
 
@@ -143,6 +147,38 @@ describe("Given a GET '/books/:id' endpoint", () => {
 
       const response = await request(app)
         .get(`${paths.books}/${failedId}`)
+        .expect(expectedStatusCode);
+
+      expect(response.body.message).toBe(expectedMessage);
+    });
+  });
+});
+
+describe("Given a PUT '/books/' endpoint", () => {
+  describe("When it receives a valid book in the body's request", () => {
+    test("Then it shoul call the response's method status with 200, the message 'The book has been succesfully updated' and the book updated", async () => {
+      const expectedStatusCode = statusCodes.ok;
+      const expectedMessage = messages.bookUpdated;
+      const updatedBook = updateBookMock;
+
+      const response = await request(app)
+        .put(`${paths.books}/`)
+        .send(updatedBook)
+        .expect(expectedStatusCode);
+
+      expect(response.body.message).toStrictEqual(expectedMessage);
+    });
+  });
+
+  describe("When it receives an invalid id in the bodys request", () => {
+    test("Then it should call the response's method '400' and the message 'Can't update this book'", async () => {
+      const expectedStatusCode = statusCodes.badRequest;
+      const expectedMessage = messages.errorUpdated;
+      updateBookMock.id = "invalidId";
+
+      const response = await request(app)
+        .put(`${paths.books}/`)
+        .send(updateBookMock)
         .expect(expectedStatusCode);
 
       expect(response.body.message).toBe(expectedMessage);

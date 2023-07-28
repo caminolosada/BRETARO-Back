@@ -253,7 +253,7 @@ describe("Given a updateBook controller", () => {
   describe("When it receives a request with a valid book, a response and a next function", () => {
     test("Then it should calls the response's method with status code '200', the message 'The book has been succesfully updated' and the book updated", async () => {
       const expectedStatusCode = statusCodes.ok;
-      const expectedMessage = "The book has been succesfully updated";
+      const expectedMessage = messages.bookUpdated;
       const expectedResult = {
         message: expectedMessage,
         updatedBook: updateBookMock,
