@@ -22,10 +22,21 @@ export const getBooks = async (
   res: Response,
   next: NextFunction,
 ) => {
+  let pageCounter = 1;
+
   try {
-    const myBooks = await Book.find().sort({ _id: -1 }).limit(10).exec();
+    const pageSize = 7;
+    const startIndex = (pageCounter - 1) * pageSize;
+
+    const myBooks = await Book.find()
+      .sort({ _id: -1 })
+      .skip(startIndex)
+      .limit(pageSize)
+      .exec();
 
     res.status(statusCodes.ok).json(myBooks);
+
+    pageCounter++;
   } catch {
     const booksError = new CustomError(
       `${messages.errorDb}: can't get books`,
