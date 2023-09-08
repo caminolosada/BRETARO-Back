@@ -39,6 +39,7 @@ describe("Given a getBooks controller", () => {
   describe("When it receives a request", () => {
     Book.find = jest.fn().mockReturnValue({
       sort: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
       limit: jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(booksMock),
       }),
