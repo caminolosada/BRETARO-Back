@@ -18,25 +18,20 @@ const debug = createDebug(
 );
 
 export const getBooks = async (
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  let pageCounter = 1;
-
   try {
-    const pageSize = 7;
-    const startIndex = (pageCounter - 1) * pageSize;
+    const { limit } = req.query;
+    const limitNumber = Number(limit);
 
     const myBooks = await Book.find()
       .sort({ _id: -1 })
-      .skip(startIndex)
-      .limit(pageSize)
+      .limit(limitNumber)
       .exec();
 
     res.status(statusCodes.ok).json(myBooks);
-
-    pageCounter++;
   } catch {
     const booksError = new CustomError(
       `${messages.errorDb}: can't get books`,

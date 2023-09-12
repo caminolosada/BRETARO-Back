@@ -30,7 +30,7 @@ beforeEach(() => {
 });
 
 describe("Given a getBooks controller", () => {
-  const req = {};
+  const req: Partial<CustomRequest> = { query: { limit: "7" } };
   const res: CustomResponse = {
     status: jest.fn().mockReturnThis(),
     json: jest.fn(),
@@ -39,15 +39,17 @@ describe("Given a getBooks controller", () => {
   describe("When it receives a request", () => {
     Book.find = jest.fn().mockReturnValue({
       sort: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      limit: jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue(booksMock),
-      }),
+      limit: jest.fn().mockReturnThis(),
+      exec: jest.fn().mockResolvedValue(booksMock),
     });
     test("Then it should call the response's method status with 200", async () => {
       const expectedStatusCode = statusCodes.ok;
 
-      await getBooks(req as Request, res as Response, next as NextFunction);
+      await getBooks(
+        req as CustomRequest,
+        res as Response,
+        next as NextFunction,
+      );
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
