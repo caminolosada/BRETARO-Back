@@ -30,7 +30,9 @@ beforeEach(() => {
 });
 
 describe("Given a getBooks controller", () => {
-  const req: Partial<CustomRequest> = { query: { limit: "7" } };
+  const req: Partial<CustomRequest> = {
+    query: { limit: "7", status: "unread" },
+  };
   const res: CustomResponse = {
     status: jest.fn().mockReturnThis(),
     json: jest.fn(),
