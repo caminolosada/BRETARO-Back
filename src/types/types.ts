@@ -22,7 +22,7 @@ export interface BookStructure {
   frontPage: string;
   publicationYear: string;
   editorial: string;
-  status: boolean;
+  status: string;
   rating: number;
   destination: string;
   cosmos: string;
@@ -38,6 +38,10 @@ export interface BookToUpdateStructure extends BookStructure {
 
 export interface CustomRequest extends Request {
   body: BookStructure;
+  query: {
+    limit?: string;
+    status?: string;
+  };
 }
 
 export interface CustomUpdateRequest extends Request {

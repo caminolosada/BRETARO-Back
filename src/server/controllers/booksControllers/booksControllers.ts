@@ -11,22 +11,28 @@ import {
   type BookStructure,
   type CustomUpdateRequest,
 } from "../../../types/types.js";
-import { Types } from "mongoose";
+import { type FilterQuery, Types } from "mongoose";
 
 const debug = createDebug(
   "bretaro-api:controllers:booksControllers:booksControllers.js",
 );
 
 export const getBooks = async (
-  req: Request,
+  req: CustomRequest,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const { limit } = req.query;
+    const { limit, status } = req.query;
     const limitNumber = Number(limit);
 
-    const myBooks = await Book.find()
+    const bookFilter: FilterQuery<BookStructure> = {};
+
+    if (status) {
+      bookFilter.status = status;
+    }
+
+    const myBooks = await Book.find(bookFilter)
       .sort({ _id: -1 })
       .limit(limitNumber)
       .exec();

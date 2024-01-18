@@ -16,7 +16,8 @@ const bookSchema = new Schema({
   publicationYear: String,
   editorial: String,
   status: {
-    type: Boolean,
+    type: String,
+    enum: ["read", "unread"],
     required: true,
   },
   rating: {

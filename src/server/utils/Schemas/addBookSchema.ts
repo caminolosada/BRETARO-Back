@@ -8,7 +8,7 @@ const addBookSchema = {
     frontPage: Joi.string().required(),
     publicationYear: Joi.string().required(),
     editorial: Joi.string().required(),
-    status: Joi.boolean().required(),
+    status: Joi.string().required(),
     rating: Joi.number(),
     destination: Joi.string().required(),
     cosmos: Joi.string().allow(""),

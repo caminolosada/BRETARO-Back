@@ -14,7 +14,7 @@ export const booksMock: BookDocumentStructure[] = [
       "https://res.cloudinary.com/dg1skxpqt/image/upload/v1685524428/el-desorden_xvuti4.webp",
     publicationYear: "2016",
     editorial: "Espasa",
-    status: true,
+    status: "unread",
     rating: 4,
     destination: "keep",
     cosmos:
@@ -28,7 +28,7 @@ export const booksMock: BookDocumentStructure[] = [
       "https://res.cloudinary.com/dg1skxpqt/image/upload/v1685524636/9788432239939_nbrsas.webp",
     publicationYear: "2013",
     editorial: "Seix Barral",
-    status: true,
+    status: "read",
     rating: 5,
     destination: "keep",
     cosmos:
@@ -42,7 +42,7 @@ export const addBookMock: BookStructure = {
   frontPage: "image_la_uruguaya.jpg",
   publicationYear: "2016",
   editorial: "Libros del Asteroide",
-  status: true,
+  status: "read",
   rating: 4,
   destination: "keep",
   cosmos:
@@ -58,7 +58,7 @@ export const booksMockById = [
       "https://res.cloudinary.com/dg1skxpqt/image/upload/v1685524428/el-desorden_xvuti4.webp",
     publicationYear: "2016",
     editorial: "Espasa",
-    status: true,
+    status: "read",
     rating: 4,
     destination: "keep",
     cosmos:
@@ -72,7 +72,7 @@ export const booksMockById = [
       "https://res.cloudinary.com/dg1skxpqt/image/upload/v1685524636/9788432239939_nbrsas.webp",
     publicationYear: "2013",
     editorial: "Seix Barral",
-    status: true,
+    status: "read",
     rating: 5,
     destination: "keep",
     cosmos:
@@ -88,7 +88,7 @@ export const updateBookMock: BookToUpdateStructure = {
     "https://res.cloudinary.com/dg1skxpqt/image/upload/v1685524636/9788432239939_nbrsas.webp",
   publicationYear: "2013",
   editorial: "Seix Barral",
-  status: true,
+  status: "read",
   rating: 5,
   destination: "keep",
   cosmos: "Morir es una experiencia única",
